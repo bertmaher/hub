@@ -42,6 +42,10 @@ class ScribeUploader:
             subprocess.run(cmd)
 
     def upload(self, messages):
+        if os.environ.get('SCRIBE_TEST'):
+            for m in messages:
+                print(json.dumps(m))
+            return
         if os.environ.get('SCRIBE_INTERN'):
             return self._upload_intern(messages)
         access_token = os.environ.get("SCRIBE_GRAPHQL_ACCESS_TOKEN")
